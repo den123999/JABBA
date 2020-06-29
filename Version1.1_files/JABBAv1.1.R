@@ -76,7 +76,13 @@ if(SE.I==FALSE){
   se2 = matrix(ifelse(is.na(conv.se),0.3^2,conv.se)^2,n.years,n.indices)+fixed.obsE^2#/2
 }
 
-conv.catch = as.numeric(rbind(matrix(rep(NA,(styr.I-1)*n.catches),styr.I-1,n.catches),as.matrix(catch[,-1])))
+#conv.catch = as.numeric(rbind(matrix(rep(NA,(styr.I-1)*n.catches),styr.I-1,n.catches),as.matrix(catch[,-1])))
+# this above statement added extra NAs for the catch matrix where in some cases may be not necessary.
+
+# Our test data sets of catch and cpue series are with the same length and with above line, it doesn't work. We simply changed it as below and it works:
+conv.catch = as.matrix(catch[,-1])
+
+
 Catch=matrix(conv.catch,nrow=n.years,ncol=n.catches)
 Catch[is.na(Catch)] = 0 # Replace any NA by zero 
 
